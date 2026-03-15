@@ -1,0 +1,24 @@
+name: APOD Bot
+
+on:
+  schedule:
+    - cron: '49 20 * * *'  # 02:49 AM Sri Lanka Time
+  workflow_dispatch:
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: Install dependencies
+        run: pip install requests python-telegram-bot
+      - name: Run bot
+        run: python new.py
+        env:
+          NASA_API_KEY: ${{ secrets.NASA_API_KEY }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
